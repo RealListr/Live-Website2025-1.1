@@ -1,11 +1,8 @@
 import type { NextConfig } from "next";
 
-const config: NextConfig = {
-  reactStrictMode: true,
-  // optional: silence the “workspace root” warning if you still see it
-  experimental: {
-    turbopack: { root: __dirname },
-  },
+const nextConfig: NextConfig = {
+  // You can add other config here later if needed.
+  // Turbopack is already the default in Next 16, so no extra experimental flag needed.
 };
 
-export default config;
+export default nextConfig;
