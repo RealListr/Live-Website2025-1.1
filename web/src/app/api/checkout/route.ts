@@ -3,9 +3,8 @@ import { NextRequest, NextResponse } from "next/server";
 import Stripe from "stripe";
 import { plans, billingPolicies } from "@/config/pricing";
 
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY as string, {
-  apiVersion: "2024-06-20", // or latest you have installed
-});
+const stripe = new Stripe(process.env.STRIPE_SECRET_KEY as string, {});
+
 
 export async function POST(req: NextRequest) {
   try {
