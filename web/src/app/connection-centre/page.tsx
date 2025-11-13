@@ -5,6 +5,9 @@
 import React, { useMemo, useRef, useState } from "react";
 import MainFeedCard from "@/components/MainFeedCard";
 import { publishToFeed } from "@/lib/publishToFeed";
+// …your existing imports…
+import { uploadMany } from "@/lib/uploadMedia";
+
 
 /* ---------- Languages (UI labels; can expand anytime) ---------- */
 const LANGS = [
@@ -469,7 +472,6 @@ export default function ConnectionCentrePage() {
   }, [content, ui]);
 
   /* ---------- uploads ---------- */
- import { uploadMany } from "@/lib/uploadMedia";
 
 // Images
 const onPickImage = async (files: FileList | null) => {
