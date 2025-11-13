@@ -1,12 +1,22 @@
-// app/api/checkout/route.ts
+// web/src/app/api/checkout/route.ts
 import { NextRequest, NextResponse } from "next/server";
 import Stripe from "stripe";
 import { plans, billingPolicies } from "@/config/pricing";
 
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY as string, {});
-
-
 export async function POST(req: NextRequest) {
+  const stripeKey = process.env.STRIPE_SECRET_KEY;
+
+  if (!stripeKey) {
+    console.error("Missing STRIPE_SECRET_KEY environment variable");
+    return NextResponse.json(
+      { error: "Stripe not configured" },
+      { status: 500 }
+    );
+  }
+
+  // Create Stripe client lazily, only when a request comes in
+  const stripe = new Stripe(stripeKey, {});
+
   try {
     const body = await req.json();
     const { planId } = body as { planId?: string };
@@ -37,7 +47,8 @@ export async function POST(req: NextRequest) {
       req.nextUrl.origin
     ).toString();
 
-    const mode = plan.type === "Subscription" ? "subscription" : "payment";
+    const mode: Stripe.Checkout.SessionCreateParams.Mode =
+      plan.type === "Subscription" ? "subscription" : "payment";
 
     const session = await stripe.checkout.sessions.create({
       mode,
@@ -49,18 +60,16 @@ export async function POST(req: NextRequest) {
       ],
       success_url: successUrl + "?session_id={CHECKOUT_SESSION_ID}",
       cancel_url: cancelUrl,
-      // Optional metadata for your backend
       metadata: {
         plan_id: plan.id,
         plan_name: plan.name,
         segment: plan.segment,
         type: plan.type,
       },
-      // If you ever add trials / coupons, wire them here
     });
 
     return NextResponse.json({ url: session.url });
-  } catch (err: any) {
+  } catch (err) {
     console.error("Stripe checkout error:", err);
     return NextResponse.json(
       { error: "Stripe checkout failed" },
