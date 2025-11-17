@@ -1,7 +1,8 @@
 // src/app/pricing/page.tsx
-"use client";
 
-import React, { useEffect, useState } from "react";
+import React from "react";
+import { redirect } from "next/navigation";
+import { requireAuth } from "@/lib/auth";
 
 type PlanBase = {
   id: string;
@@ -269,33 +270,17 @@ const commercialCampaigns: CampaignPlan[] = [
   },
 ];
 
-export default function PricingPage() {
-  // ------- simple auth gate using the same rlauth cookie -------
-  const [checked, setChecked] = useState(false);
-  const [authed, setAuthed] = useState(false);
-
-  useEffect(() => {
-    const hasCookie = document.cookie
-      .split(";")
-      .some((c) => c.trim().startsWith("rlauth=valid"));
-
-    if (!hasCookie) {
-      window.location.href = "/login";
-    } else {
-      setAuthed(true);
-      setChecked(true);
-    }
-  }, []);
-
-  if (!checked || !authed) return null;
-  // --------------------------------------------------------------
+export default async function PricingPage() {
+  const authed = await requireAuth();
+  if (!authed) {
+    redirect("/login");
+  }
 
   return (
     <main className="mx-auto max-w-6xl px-4 py-10">
       <h1 className="text-2xl font-bold">Subscriptions &amp; Campaigns</h1>
       <p className="mt-2 text-neutral-600">
-        Choose a subscription for your team, then add listing campaigns as
-        needed.
+        Choose a subscription for your team, then add listing campaigns as needed.
       </p>
 
       {/* ===== Subscriptions section ===== */}
