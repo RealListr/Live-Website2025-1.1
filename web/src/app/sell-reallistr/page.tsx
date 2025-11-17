@@ -69,20 +69,23 @@ function ListingSlide({ listing }: { listing: DemoListing }) {
         </span>
       </div>
 
-      {/* “Image” strip placeholder */}
-      <div className="mb-4 h-40 w-full rounded-xl bg-gradient-to-br from-neutral-900 via-neutral-800 to-neutral-700">
-        <div className="flex h-full w-full flex-col justify-between p-3 text-xs text-white/80">
+           {/* “Image” strip placeholder – light, photo-style */}
+      <div
+        className="mb-4 h-40 w-full rounded-xl border border-neutral-200 bg-gradient-to-br from-neutral-100 via-neutral-50 to-neutral-200"
+      >
+        <div className="flex h-full w-full flex-col justify-between p-3 text-xs text-neutral-700">
           <div className="inline-flex items-center gap-2">
-            <span className="rounded-full bg-white/10 px-2 py-0.5 text-[10px] font-medium">
+            <span className="rounded-full bg-white/70 px-2 py-0.5 text-[10px] font-medium shadow-sm">
               RealListr card preview
             </span>
           </div>
           <div className="space-y-1">
-            <div className="h-1.5 w-28 rounded-full bg-white/20" />
-            <div className="h-1.5 w-20 rounded-full bg-white/10" />
+            <div className="h-1.5 w-28 rounded-full bg-neutral-300/80" />
+            <div className="h-1.5 w-20 rounded-full bg-neutral-200/80" />
           </div>
         </div>
       </div>
+
 
       <div className="space-y-2">
         <div className="text-xs font-semibold uppercase tracking-wide text-neutral-500">
