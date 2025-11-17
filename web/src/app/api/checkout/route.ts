@@ -8,9 +8,9 @@ if (!stripeSecretKey) {
   throw new Error("STRIPE_SECRET_KEY is not set in .env.local");
 }
 
-const stripe = new Stripe(stripeSecretKey, {
-  apiVersion: "2024-06-20",
-});
+// Use Stripe's default API version used by the installed SDK
+const stripe = new Stripe(stripeSecretKey);
+
 
 // Agent / Agency subscriptions + recurring listing packages
 const SUBSCRIPTION_PRICE_MAP: Record<string, string | undefined> = {
