@@ -1,4 +1,3 @@
-// src/app/sell-reallistr/page.tsx
 "use client";
 
 import { useEffect, useState } from "react";
@@ -117,8 +116,8 @@ export default function SellRealListrPage() {
       setTimeout(() => {
         setIndex((prev) => (prev + 1) % demoListings.length);
         setFading(false);
-      }, 250); // fade-out duration
-    }, 3500); // time each card stays on screen
+      }, 250); // fade-out
+    }, 3500); // time each card stays
 
     return () => clearInterval(interval);
   }, []);
@@ -158,6 +157,7 @@ export default function SellRealListrPage() {
             </p>
           </div>
         </div>
+
         <div className="mt-6 space-y-2 text-sm text-neutral-700">
           <p>Use this page when you’re:</p>
           <ul className="list-disc space-y-1 pl-5">
@@ -167,3 +167,51 @@ export default function SellRealListrPage() {
           </ul>
         </div>
 
+        <div className="mt-8 flex flex-wrap items-center gap-3">
+          <a
+            href="mailto:hello@reallistr.com.au?subject=Sell%20RealListr"
+            className="rounded-lg bg-black px-4 py-2 text-sm font-medium text-white hover:bg-black/90"
+          >
+            Email RealListr
+          </a>
+          <span className="text-xs text-neutral-500">
+            We’ll reply with partner options and launch timelines.
+          </span>
+        </div>
+      </section>
+
+      {/* RIGHT: fading multilingual card preview */}
+      <section className="flex w-full justify-center lg:w-1/2">
+        <div className="relative w-full max-w-md">
+          <div
+            className={`transition-opacity duration-300 ${
+              fading ? "opacity-0" : "opacity-100"
+            }`}
+          >
+            <ListingSlide listing={current} />
+          </div>
+
+          {/* dots under the card */}
+          <div className="mt-3 flex justify-center gap-1.5">
+            {demoListings.map((l, i) => (
+              <button
+                key={l.id}
+                type="button"
+                onClick={() => {
+                  setIndex(i);
+                  setFading(false);
+                }}
+                className={`h-1.5 rounded-full transition-all ${
+                  i === index
+                    ? "w-5 bg-neutral-900"
+                    : "w-2 bg-neutral-300 hover:bg-neutral-400"
+                }`}
+                aria-label={`Show ${l.languageLabel} preview`}
+              />
+            ))}
+          </div>
+        </div>
+      </section>
+    </main>
+  );
+}
