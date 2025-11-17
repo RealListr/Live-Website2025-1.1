@@ -158,9 +158,12 @@ export default function SellRealListrPage() {
             </p>
           </div>
         </div>
-
         <div className="mt-6 space-y-2 text-sm text-neutral-700">
           <p>Use this page when you’re:</p>
           <ul className="list-disc space-y-1 pl-5">
             <li>Running a quick office demo or Zoom walkthrough</li>
             <li>Sending RealListr to an agent before a follow-up call</li>
+            <li>Explaining multi-language cards to a director or BDM</li>
+          </ul>
+        </div>
+
